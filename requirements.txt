@@ -1,3 +1,4 @@
 streamlit
-qrcode
+supabase
+streamlit-autorefresh
 pillow
