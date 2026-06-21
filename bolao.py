@@ -176,7 +176,6 @@ def pagina_apostar(cfg):
 
     nome    = st.text_input("Nome completo")
     contato = st.text_input("Contato (WhatsApp)")
-    cpf     = st.text_input("CPF", max_chars=14, placeholder="000.000.000-00")
 
     st.markdown("**Seu palpite de placar:**")
     c1, c2 = st.columns(2)
@@ -219,11 +218,9 @@ def pagina_apostar(cfg):
             st.error("Informe seu nome.")
         elif not contato.strip():
             st.error("Informe um contato.")
-        elif not cpf_valido(cpf):
-            st.error("CPF inválido.")
         else:
             inserir_palpite({
-                "nome": nome.strip(), "contato": contato.strip(), "cpf": fmt_cpf(cpf),
+                "nome": nome.strip(), "contato": contato.strip(),
                 "gols_a": int(ga), "gols_b": int(gb), "status": "aguardando",
                 "criado_em": datetime.now(timezone.utc).isoformat(), "extra_min": 0,
             })
@@ -295,7 +292,7 @@ def pagina_admin(cfg):
         with st.expander(f"{p['nome']}  ·  {cfg['time_a']} {p['gols_a']} x {p['gols_b']} {cfg['time_b']}  ·  {badge}"):
             st.markdown(f"<span style='color:{cor};font-size:26px;font-weight:800'>{cronometro}</span>",
                         unsafe_allow_html=True)
-            st.write(f"**Contato:** {p['contato']}  |  **CPF:** {p['cpf']}")
+            st.write(f"**Contato:** {p['contato']}")
             b1, b2, b3 = st.columns(3)
             if p["status"] != "pago" and b1.button("Aceitar", key=f"ok{p['id']}"):
                 atualizar_palpite(p["id"], {"status": "pago"}); st.rerun()
