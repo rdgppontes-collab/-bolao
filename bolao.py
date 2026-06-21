@@ -12,6 +12,7 @@ Requer no secrets do Streamlit Cloud:
 import os
 import base64
 from datetime import datetime, timedelta, timezone
+from urllib.parse import quote
 
 import streamlit as st
 from supabase import create_client
@@ -201,9 +202,10 @@ def pagina_apostar(cfg):
     st.write("Ou copie o **Pix Copia e Cola**:")
     st.code(PIX_COPIA_COLA, language=None)
 
-    msg = (f"Olá! Sou {nome or '[seu nome]'}. Meu palpite no bolão: "
-           f"{ta} {int(ga)} x {int(gb)} {tb}. Segue meu comprovante Pix.")
-    link = f"https://wa.me/{WHATSAPP}?text={msg.replace(' ', '%20')}"
+    msg = (f"⚽🎉 Eaí! Sou {nome or '[seu nome]'} e tô no bolão! "
+           f"Meu palpite é {ta} {int(ga)} x {int(gb)} {tb} 🔥 "
+           f"Já fiz o Pix de R$ {VALOR_APOSTA:.2f} e tô mandando o comprovante. Bora pro título! 🏆")
+    link = f"https://wa.me/{WHATSAPP}?text={quote(msg)}"
     st.markdown("**Envie o comprovante (obrigatório):**")
     st.markdown(f'<a class="wpp" href="{link}" target="_blank">🟢 Enviar comprovante pelo WhatsApp</a>',
                 unsafe_allow_html=True)
